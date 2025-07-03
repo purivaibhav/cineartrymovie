@@ -1,0 +1,46 @@
+/* Services.css */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+.number-animation {
+  transform: scale(1);
+  opacity: 0;
+  animation: numberAnimation 0.5s forwards;
+}
+
+.text-animation {
+  opacity: 0;
+  animation: textAnimation 0.5s forwards;
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes numberAnimation {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes textAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
