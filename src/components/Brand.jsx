@@ -33,6 +33,9 @@ const sections = [
     text:
       'Our company specializes in envisioning images and animations of architectural and engineering projects. We use the latest software to create stunning visuals that portray astonishing photorealistic end products.',
   },
+   
+  
+
 ];
 
 // Icon SVG for the bullet

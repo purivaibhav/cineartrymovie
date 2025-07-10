@@ -1,0 +1,63 @@
+.projectsWrapper {
+  background-color: black;
+  color: white;
+  width: 100%;
+  position: relative;
+}
+
+.project {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 100px;
+  border-top: 1px solid rgb(80, 80, 80);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.project:last-of-type {
+  border-bottom: 1px solid rgb(80, 80, 80);
+}
+
+.project:hover {
+  opacity: 0.5;
+}
+
+.project:hover h2 {
+  transform: translateX(-10px);
+}
+
+.project:hover p {
+  transform: translateX(10px);
+}
+
+.project h2 {
+  font-size: 60px;
+  margin: 0px;
+  font-weight: 400;
+  transition: all 0.4s;
+}
+
+.project p {
+  transition: all 0.4s;
+  font-weight: 300;
+}
+
+/* Image Preview Styling */
+.previewImageWrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  pointer-events: none;
+}
+
+.previewImage {
+  width: 400px;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}

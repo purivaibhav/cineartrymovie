@@ -19,15 +19,24 @@ module.exports = {
           from: { transform: 'rotate(0deg)' },
           to: { transform: 'rotate(360deg)' },
         },
+         fadeUp: {
+          '0%': { opacity: 0, transform: 'translateY(20px)' },
+          '100%': { opacity: 1, transform: 'translateY(0)' },
+        },
         spinCcw: {
           from: { transform: 'rotate(0deg)' },
           to: { transform: 'rotate(-360deg)' },
+        },
+         blink: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
         },
       },
       animation: {
         float: 'float 3s ease-in-out infinite',
         'spin-cw': 'spinCw 1s ease-in-out',
         'spin-ccw': 'spinCcw 1s ease-in-out',
+         'blink': 'blink 1s infinite',
       },
       
     },

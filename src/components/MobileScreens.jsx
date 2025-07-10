@@ -1,82 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import leftMobile from '../assets/mobile.png';      // Your left mobile image
-import rightMobile from '../assets/mobile1.png';    // Your right mobile image
+import React from "react";
+import videoFile from "../assets/Film_Studio_Render_Ready_1.mp4";
 
-const MobileScreen = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const [prevScrollY, setPrevScrollY] = useState(0);
-  const [scrollDirection, setScrollDirection] = useState('down');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScroll = window.scrollY;
-      setScrollDirection(currentScroll > prevScrollY ? 'down' : 'up');
-      setPrevScrollY(currentScroll);
-      setScrollY(currentScroll);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [prevScrollY]);
-
-  // Config
-  const maxScroll = 400;
-  const progress = Math.min(scrollY / maxScroll, 1);
-
-  // Translate & Scale Logic Based on Scroll Direction
-  const baseDistance = 120;
-  const moveDistance = scrollDirection === 'down'
-    ? baseDistance * (1 - progress) // close on scroll down
-    : baseDistance * progress;      // open on scroll up
-
-  const scale = 0.85 + progress * 0.15; // scales up slightly when scrolling
-
+const Services = () => {
   return (
-    <section className="relative h-[200vh] bg-black flex items-center justify-center overflow-hidden px-4">
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0a1610] via-black to-[#2a0b00] z-0" />
+    <div className="relative min-h-screen w-full overflow-hidden bg-black text-white font-sans">
+      {/* Background Video */}
+      <video
+        src={videoFile}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-90 z-0 pointer-events-none"
+      />
 
-      {/* Center Text */}
-      <div className="absolute top-[20%] z-10 text-center text-white w-full px-4">
-        <p className="text-sm font-semibold mb-2">
-          TRUSTED <span className="text-gray-300">18,000+</span> SATISFIED CLIENTS
-        </p>
-        <h1 className="text-4xl sm:text-6xl font-bold mb-4">
-          Future <br className="sm:hidden" /> <span className="text-gray-300">Automation</span>
+      {/* Overlay Content */}
+      {/* <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6 bg-black/50">
+        <h1 className="text-[8vw] font-extrabold text-gray-100 drop-shadow-md">
+          Our Services
         </h1>
-        <p className="text-gray-400 text-sm sm:text-base max-w-md mx-auto mb-6">
-          Lorem ipsum dolor amet consur adipiscing. Nunc tortor odio rutrum fringilla.
+        <p className="text-xl sm:text-2xl max-w-2xl mt-4 text-gray-300">
+          We craft immersive film studio experiences with design, VFX, and creative direction that tell powerful stories.
         </p>
-        <button className="bg-white text-black px-6 py-2 rounded-full font-medium hover:scale-105 transition">
-          Explore Service →
+        <button className="mt-10 px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-all">
+          Get in Touch
         </button>
-      </div>
-
-      {/* Left Mobile */}
-      <img
-        src={leftMobile}
-        alt="Left"
-        className="absolute top-1/2 w-[240px] sm:w-[300px] md:w-[360px] transition-transform duration-300 ease-out"
-        style={{
-          transform: `translateY(-50%) translateX(-${moveDistance}px) scale(${scale})`,
-          left: '5%',
-          zIndex: 10,
-        }}
-      />
-
-      {/* Right Mobile */}
-      <img
-        src={rightMobile}
-        alt="Right"
-        className="absolute top-1/2 w-[240px] sm:w-[300px] md:w-[360px] transition-transform duration-300 ease-out"
-        style={{
-          transform: `translateY(-50%) translateX(${moveDistance}px) scale(${scale})`,
-          right: '5%',
-          zIndex: 10,
-        }}
-      />
-    </section>
+      </div> */}
+    </div>
   );
 };
 
-export default MobileScreen;
+export default Services;
