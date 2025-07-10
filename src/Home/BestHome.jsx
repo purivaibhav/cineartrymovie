@@ -170,7 +170,8 @@ export default function ProjectSection() {
       ref={sectionRef}
       className={`min-h-[450vh] w-full transition-colors duration-500 ease-in-out ${getBackgroundColor()}`}
     >
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden relative">
+     <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden relative pt-24 sm:pt-32">
+
         {/* Background pills for data section */}
         {textStage >= 7 && (
           <div className="absolute inset-0 overflow-hidden">

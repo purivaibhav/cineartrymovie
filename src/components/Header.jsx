@@ -49,7 +49,7 @@ const Header = () => {
             src={logo}
             alt="Company Logo"
             className={`transition-all cursor-pointer duration-300 object-contain  ${
-              scrolled ? "h-10" : "h-20"  //h-15 h-30
+              scrolled ? "h-12" : "h-25"  //h-15 h-30
             } -ml-7 ${!scrolled ? "animate-float" : ""}`}
           />
 
