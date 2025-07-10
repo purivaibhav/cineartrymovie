@@ -65,10 +65,10 @@ const Home2 = () => {
             className="transition-all duration-500"
           >
             <p className="text-xs md:text-sm uppercase tracking-wide text-gray-500 mb-2">
-              15+ Years of Work Experience
+              {/* 15+ Years of Work Experience */}
             </p>
             <h1 className="text-[28px] md:text-[60px] font-extrabold text-[#111111] leading-tight max-w-4xl mx-auto">
-              Your Trusted Partner in Design Excellence
+              {/* Your Trusted Partner in Design Excellence */}
             </h1>
           </div>
         </div>

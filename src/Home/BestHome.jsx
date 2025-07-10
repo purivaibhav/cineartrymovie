@@ -205,15 +205,15 @@ export default function ProjectSection() {
             scrollY > 100 ? "opacity-0" : "opacity-100"
           }`}
         >
-          Your data runs
-          <br /> the world
+          Welcome to
+          <br />  CineArtery
         </h1>
         <p
           className={`text-lg md:text-xl mb-6 transition-opacity duration-500 ${
             scrollY > 100 ? "opacity-0" : "opacity-100"
           }`}
         >
-          Start earning from it today.
+          Where creativity flows through every frame.
         </p>
 
         {/* Fun fact text that appears when background turns cream */}
