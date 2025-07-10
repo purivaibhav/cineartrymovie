@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Menu } from "lucide-react";
 
@@ -13,11 +13,41 @@ const items = [
   { arrow: true, bg: "bg-white", textColor: "text-black" },
 ];
 
+// Generate random values
 const getRandom = (min, max) => Math.random() * (max - min) + min;
 
 const ContactPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
+  const [positions, setPositions] = useState([]);
+  const [startMoving, setStartMoving] = useState(false);
+
+  // Initial static show for 2.5s
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setStartMoving(true);
+    }, 2500); // Show initially
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Generate new positions every 7s (5s move + 2s pause)
+  useEffect(() => {
+    if (!startMoving) return;
+
+    const generateNewPositions = () => {
+      const newPos = items.map(() => ({
+        x: getRandom(-180, 180),
+        y: getRandom(-130, 130),
+        rotate: getRandom(-20, 20),
+      }));
+      setPositions(newPos);
+    };
+
+    generateNewPositions();
+    const interval = setInterval(generateNewPositions, 7000);
+
+    return () => clearInterval(interval);
+  }, [startMoving]);
 
   return (
     <div className="relative h-screen w-full bg-[#d8ccb4] overflow-hidden flex items-center justify-center">
@@ -26,30 +56,48 @@ const ContactPage = () => {
         How can we <span className="text-white">help</span>?
       </h1>
 
-      {/* Bubbles */}
+      {/* Animated Items */}
       {items.map((item, index) => {
-        const x = getRandom(-300, 300);
-        const y = getRandom(-200, 200);
-        const delay = index * 0.15;
+        const pos = positions[index] || { x: 0, y: 0, rotate: 0 };
 
         return (
           <motion.div
             key={index}
-            initial={{ y: -800 }}
-            animate={{ x, y, rotate: getRandom(-30, 30), opacity: 1 }}
-            transition={{ type: "spring", delay }}
-            className={`absolute rounded-full ${item.bg} ${item.textColor} shadow-xl cursor-pointer 
-              flex items-center justify-center ${
+            initial={{ opacity: 0, y: -200 }}
+            animate={
+              startMoving
+                ? {
+                    x: pos.x,
+                    y: pos.y,
+                    rotate: pos.rotate,
+                    opacity: 1,
+                    transition: {
+                      duration: 5,
+                      ease: "easeInOut",
+                      delay: 0,
+                    },
+                  }
+                : {
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      duration: 1.5,
+                      delay: index * 0.2,
+                      ease: "easeOut",
+                    },
+                  }
+            }
+            className={`absolute rounded-full ${item.bg} ${item.textColor} shadow-xl cursor-pointer flex items-center justify-center ${
               item.rotate ? "rotate-90 origin-bottom-left" : ""
             }`}
             style={{
-              width: item.icon ? 200 : item.arrow ? 200 : 520,
-              height: item.icon ? 200 : item.arrow ? 200 : 160,
+              width: item.icon || item.arrow ? 200 : 520,
+              height: item.icon || item.arrow ? 200 : 160,
               padding: item.icon || item.arrow ? "1.5rem" : "2.5rem 4rem",
               fontSize: "2.5rem",
               fontWeight: 800,
             }}
-            whileHover={{ scale: 1.12, rotate: getRandom(-10, 10) }}
+            whileHover={{ scale: 1.1 }}
           >
             {item.icon ? (
               <span className="text-7xl">+</span>
@@ -62,7 +110,7 @@ const ContactPage = () => {
         );
       })}
 
-      {/* Menu Toggle Button */}
+      {/* Menu Toggle */}
       <motion.button
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -76,7 +124,7 @@ const ContactPage = () => {
         <span className="text-white font-bold text-xl">Menu</span>
       </motion.button>
 
-      {/* Animated Menu Panel */}
+      {/* Dropdown Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div

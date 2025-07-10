@@ -118,3 +118,28 @@
   clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
 }
 
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #edbfff;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.2s ease, width 0.3s, height 0.3s;
+  opacity: 0;
+}
+
+.custom-cursor.black {
+  background-color: #000;
+}
+
+.custom-cursor.scrolling {
+  width: 26px;
+  height: 26px;
+}
+
+
