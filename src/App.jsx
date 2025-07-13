@@ -20,6 +20,7 @@ import Projects from "./Project/Projects";
 import BestHome from "./Home/BestHome";
 import BrandDesign from "./Home/BrandDesign";
 import MentionsClients from "./Home/MentionsClients";
+import LandinPage from "./landingpage/landingP";
 
 
 
@@ -102,6 +103,7 @@ function App() {
         <>
           <Header />
           <BestHome />
+          <LandinPage/>
           <AboutUsPage />
             <BrandDesign/>
           
