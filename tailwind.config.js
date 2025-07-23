@@ -4,11 +4,13 @@ module.exports = {
     extend: {
       fontFamily: {
         heading: ['Satoshi', 'sans-serif'],
+        satoshi: ['Satoshi', 'sans-serif'],
         unbounded: ['Unbounded', 'sans-serif'],
         manrope: ['Manrope', 'sans-serif'],
         mont: ['Montserrat', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
         syne: ['Syne', 'sans-serif'],
+         sans: ['Numans', 'Arial Black', 'Arial', 'sans-serif'],
       },
       keyframes: {
         float: {

@@ -3,7 +3,7 @@ import { AnimatePresence } from "framer-motion";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Preloader from "./Preloader/Preloader";
-import Header from "./components/Header";
+// import Header from "./components/Header"; 
 import Footer from "./components/Footer";
 
 import BestHome from "./Home/BestHome";
@@ -12,8 +12,6 @@ import Production from "./components/Production";
 import Services from "./components/Services";
 import Contact from "./components/Contact";
 
-// Components only used on homepage
-import BrandDesign from "./Home/BrandDesign";
 import MentionsClients from "./Home/MentionsClients";
 import Home from "./components/Home";
 import Home2 from "./components/Home2";
@@ -21,6 +19,9 @@ import Carrer from "./components/Carrer";
 import TeamSection from "./components/TeamSection";
 import CollabSection from "./components/Collab";
 import Projects from "./Project/Projects";
+import StickySectionsLayout from "./components/StickySectionsLayout";
+// import Component from "./components/Crearistpa";
+import PortfolioPage from "./components/Crearistpa";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -92,7 +93,7 @@ function App() {
   if (isLoading) {
     return (
       <AnimatePresence>
-        <Preloader key="preloader" />
+        {/* <Preloader key="preloader" /> */}
       </AnimatePresence>
     );
   }
@@ -100,7 +101,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-white">
-        <Header />
+        {/* <Header />  */}
 
         <Routes>
           {/* Homepage */}
@@ -110,12 +111,14 @@ function App() {
               <>
                 <BestHome />
                 <AboutUsPage />
-                <BrandDesign />
+                <StickySectionsLayout/>
                 <Home />
                 <Home2 />
+                <PortfolioPage/>
                 <Carrer />
-                <Production />
-                <Projects />
+                
+              
+               
                 <Services />
                 <MentionsClients />
                 <TeamSection />
@@ -125,7 +128,7 @@ function App() {
             }
           />
 
-          {/* Other main pages as separate routes */}
+          {/* Other main pages */}
           <Route path="/about" element={<AboutUsPage />} />
           <Route path="/production" element={<Production />} />
           <Route path="/services" element={<Services />} />

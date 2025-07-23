@@ -1,66 +1,102 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
+import Header from "../components/header"
 
-// Import images
-import musicImg from "./HomeImg/music.png"
-import clapboardImg from "./HomeImg/clapboard.png"
-import noteImg from "./HomeImg/note.png"
-import calenderImg from "./HomeImg/calender.png"
-import ticketImg from "./HomeImg/ticket.png"
+// Background pill elements for the data section
+const backgroundPills = Array.from({ length: 50 }, (_, i) => ({
+  id: i,
+  width: Math.random() * 150 + 80,
+  height: 40 + Math.random() * 20,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  delay: Math.random() * 2,
+}))
 
-const originalList = [
-  {
-    id: 1,
-    // image: musicImg,
-    image: noteImg,
-    bg: "bg-purple-500",
-    shape: "rounded-full",
-    text: "songs",
-  },
-  {
-    id: 2,
-    image: clapboardImg,
-    bg: "bg-green-600",
-    shape: "rounded-2xl",
-    text: "movie",
-  },
-  {
-    id: 3,
-    // image: noteImg,
-    image: calenderImg,
-    bg: "bg-orange-500",
-    shape: "rounded-2xl",
-    text: "interests",
-  },
-  {
-    id: 4,
-    // image: ticketImg,
-    image: musicImg,
-    bg: "bg-yellow-400",
-    shape: "rounded-2xl",
-    text: "shopping",
-  },
-  {
-    id: 5,
-    // image: calenderImg,
-    image: ticketImg,
-    bg: "bg-blue-500",
-    shape: "rounded-full",
-    text: "habits",
-  },
-]
-
-
-
-export default function BestHome() {
+function Besthome() {
   const sectionRef = useRef(null)
   const [scrollY, setScrollY] = useState(0)
-  const [icons, setIcons] = useState(originalList)
-  const [shuffling, setShuffling] = useState(true)
-  const [blink, setBlink] = useState(false)
   const [textStage, setTextStage] = useState(0)
+  const [animatingIcons, setAnimatingIcons] = useState(new Set())
+  const [iconPositions, setIconPositions] = useState([0, 1, 2, 3, 4])
+  const [isAnimationRunning, setIsAnimationRunning] = useState(false)
+
+  const icons = [
+    {
+      bg: "bg-[#26B663]",
+      src: "/src/Home/HomeImg/clapboard.png",
+      alt: "Clapboard",
+      shape: "rounded-3xl",
+      text: "movie",
+    },
+    {
+      bg: "bg-[#FFD950]",
+      src: "/src/Home/HomeImg/ticket.png",
+      alt: "Ticket",
+      shape: "rounded-3xl",
+      text: "shopping",
+    },
+    {
+      bg: "bg-[#6FA3FF]",
+      src: "/src/Home/HomeImg/calender.png",
+      alt: "Calendar",
+      shape: "rounded-3xl",
+      clipPath: "polygon(5% 5%, 85% 5%, 100% 50%, 85% 95%, 5% 95%)",
+      text: "habits",
+    },
+    {
+      bg: "bg-[#FFA267]",
+      src: "/src/Home/HomeImg/note.png",
+      alt: "Note",
+      shape: "rounded-full",
+      text: "interests",
+    },
+    {
+      bg: "bg-[#7C73FF]",
+      src: "/src/Home/HomeImg/music.png",
+      alt: "Music",
+      shape: "rounded-full",
+      text: "songs",
+    },
+  ]
+
+  const shuffleArray = (array) => {
+    const newArray = [...array]
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
+    }
+    return newArray
+  }
+
+  const startAnimation = () => {
+    if (isAnimationRunning) return
+    setIsAnimationRunning(true)
+    // Phase 1: First 2 icons blink (slower)
+    setAnimatingIcons(new Set([0, 1]))
+    setTimeout(() => {
+      // Shuffle positions during first blink
+      setIconPositions(shuffleArray(iconPositions))
+    }, 400)
+    setTimeout(() => {
+      // Stop first 2 icons blinking
+      setAnimatingIcons(new Set())
+    }, 800)
+    // Phase 2: Other 3 icons blink quickly after a short delay
+    setTimeout(() => {
+      setAnimatingIcons(new Set([2, 3, 4]))
+    }, 900)
+    setTimeout(() => {
+      // Shuffle positions again during second blink
+      setIconPositions((prev) => shuffleArray(prev))
+    }, 1100)
+    setTimeout(() => {
+      // Stop all animations
+      setAnimatingIcons(new Set())
+      setIsAnimationRunning(false)
+    }, 1400)
+  }
 
   // Scroll handling
   useEffect(() => {
@@ -75,7 +111,7 @@ export default function BestHome() {
         if (currentScrollY <= 1000) {
           setTextStage(0) // Initial state - shuffling
         } else if (currentScrollY > 1000 && currentScrollY < 1150) {
-          setTextStage(0.1) // Icons shrink but stay visible
+          setTextStage(0.1) // Icons move to center
         } else if (currentScrollY >= 1150 && currentScrollY < 1300) {
           setTextStage(0.2) // Background changes to cream
         } else if (currentScrollY >= 1300 && currentScrollY < 1450) {
@@ -87,84 +123,37 @@ export default function BestHome() {
         } else if (currentScrollY >= 1750 && currentScrollY < 1900) {
           setTextStage(3) // "That [movie] must-see movie." completes
         } else if (currentScrollY >= 1900 && currentScrollY < 2050) {
-          setTextStage(4) // "Your top [ghost]" appears
+          setTextStage(4) // "Your top [interests]" appears
         } else if (currentScrollY >= 2050 && currentScrollY < 2200) {
-          setTextStage(5) // "Your top [ghost] interests and" completes
+          setTextStage(5) // "Your top [interests] interests and" completes
         } else if (currentScrollY >= 2200 && currentScrollY < 2350) {
-          setTextStage(6) // "all your shopping [shopping][shirt] habits." completes
-        } else if (currentScrollY >= 2350 && currentScrollY < 2500) {
-          setTextStage(7) // Transition to data section - background turns black
-        } else {
-          // Calculate word reveal progress for the data section - FASTER AND SMOOTHER
-          const dataStartScroll = 2500
-          const totalDataScroll = 1500 // Reduced from 3000 to make it faster
-          const wordRevealProgress = Math.max(0, Math.min(1, (currentScrollY - dataStartScroll) / totalDataScroll))
-          setTextStage(7 + wordRevealProgress)
-        }
-
-        // Handle shuffling state
-        if (currentScrollY <= 1000) {
-          if (!shuffling) {
-            setShuffling(true)
-            setIcons(originalList)
-          }
-        } else {
-          if (shuffling) {
-            setShuffling(false)
-            setIcons(originalList)
-          }
-        }
+          setTextStage(6) // "all your shopping [shopping][habits] habits." completes
+        } 
       }
     }
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [shuffling])
+  }, [])
 
-  // Shuffle and Blink icons before scroll
+  // Auto-trigger animation every 1.5 seconds
   useEffect(() => {
-    if (!shuffling) return
-
-    const interval = setInterval(() => {
-      setBlink(true)
-      setTimeout(() => {
-        setIcons((prev) => [...prev].sort(() => Math.random() - 0.5))
-        setBlink(false)
-      }, 300)
-    }, 2500)
-
-    return () => clearInterval(interval)
-  }, [shuffling])
-
-  const getIconStyle = (index) => {
-    const delay = index * 150
-    // Handle different scroll states
     if (textStage === 0) {
-      // Initial shuffling state
-      const yOffset = scrollY > delay && scrollY <= 1000 ? -70 : 0
-      const scale = blink ? 0.6 : 1
-      return { y: yOffset, scale }
-    } else if (textStage >= 0.1 && textStage < 1) {
-      // Icons shrink and stay visible
-      const scale = blink ? 0.4 : 0.5
-      return { y: -70, scale }
-    } else {
-      // Text phase - icons are hidden (handled by text component)
-      return { y: -70, scale: 0.5, opacity: 0 }
+      const interval = setInterval(() => {
+        startAnimation()
+      }, 1500)
+      return () => clearInterval(interval)
     }
-  }
-
-  
+  }, [iconPositions, isAnimationRunning, textStage])
 
   const getBackgroundColor = () => {
-  if (textStage >= 7) {
-    return "bg-amber-50 text-black" // Keep cream instead of going to black
-  } else if (textStage >= 0.2) {
-    return "bg-amber-50 text-black"
+    if (textStage >= 7) {
+      return "bg-black text-white" // Data section - black background
+    } else if (textStage >= 0.2) {
+      return "bg-amber-50 text-black" // Cream color
+    }
+    return "bg-black text-white"
   }
-  return "bg-black text-white"
-}
-
 
   const renderInlineIcon = (iconData, size = 80) => (
     <motion.div
@@ -175,8 +164,8 @@ export default function BestHome() {
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
       <img
-        src={iconData.image || "/placeholder.svg"}
-        alt={iconData.text}
+        src={iconData.src || "/placeholder.svg"}
+        alt={iconData.alt}
         style={{
           width: size * 0.6,
           height: size * 0.6,
@@ -186,21 +175,20 @@ export default function BestHome() {
     </motion.div>
   )
 
-  // Function to determine if a word should be visible based on scroll progress - SMOOTHER
+  // Function to determine if a word should be visible based on scroll progress
   const getWordVisibility = (wordIndex, totalWords) => {
     if (textStage < 7) return false
     const progress = textStage - 7 // Get the decimal part (0 to 1)
     const wordThreshold = wordIndex / totalWords
-    // Add a small buffer for smoother transitions
     return progress >= wordThreshold - 0.02
   }
 
-  // Split text into words and render with progressive visibility - FASTER TRANSITIONS
+  // Split text into words and render with progressive visibility
   const renderProgressiveText = (text, startIndex = 0) => {
     const words = text.split(" ")
     return words.map((word, index) => {
       const globalIndex = startIndex + index
-      const isVisible = getWordVisibility(globalIndex, 65) // Increased total word count for smoother progression
+      const isVisible = getWordVisibility(globalIndex, 65)
       return (
         <span
           key={globalIndex}
@@ -215,76 +203,126 @@ export default function BestHome() {
   return (
     <section
       ref={sectionRef}
-      className={`min-h-[270vh] w-full transition-colors duration-500 ease-in-out ${getBackgroundColor()}`}
+      className={`min-h-[450vh] w-full transition-colors duration-500 ease-in-out ${getBackgroundColor()}`}
     >
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden relative pt-24 sm:pt-32">
-      
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden relative pt-10">
+        {/* Background pills for data section */}
+        {textStage >= 7 && (
+          <div className="absolute inset-0 overflow-hidden">
+            {backgroundPills.map((pill) => (
+              <motion.div
+                key={pill.id}
+                className="absolute bg-gray-600 rounded-full opacity-30"
+                style={{
+                  width: pill.width,
+                  height: pill.height,
+                  left: `${pill.x}%`,
+                  top: `${pill.y}%`,
+                }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{
+                  opacity: textStage >= 7 ? 0.3 : 0,
+                  scale: textStage >= 7 ? 1 : 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: pill.delay,
+                  ease: "easeOut",
+                }}
+              />
+            ))}
+          </div>
+        )}
 
-        <h1
-          className={`text-[60px] md:text-[90px] font-black text-center leading-none mb-4 transition-opacity duration-500 ${
-            scrollY > 100 ? "opacity-0" : "opacity-100"
+        <Header />
+
+        {/* Original Hero Content */}
+        <div
+          className={`text-center mt-2 transition-opacity duration-500 ${
+            textStage > 0 ? "opacity-0 pointer-events-none" : "opacity-100"
           }`}
         >
-          Welcome to
-          <br />
-          CineArtery
-        </h1>
-
-        <p
-          className={`text-lg md:text-xl mb-6 transition-opacity duration-500 ${
-            scrollY > 100 ? "opacity-0" : "opacity-100"
-          }`}
-        >
-          From imagination to ‘Action!’ Your story starts here...
-        </p>
-
-         {/* Download Rewards Button */}
-        <motion.div
-          className={`mb-12 transition-opacity duration-500 ${
-            scrollY > 100 ? "opacity-0 pointer-events-none" : "opacity-100"
-          }`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{
-            opacity: scrollY > 100 ? 0 : 1,
-            y: scrollY > 100 ? -20 : 0,
-          }}
-          transition={{ duration: 0.3 }}
-        >
-          <button className="bg-green-400 hover:bg-green-500 text-black font-semibold px-6 py-3 rounded-full flex items-center gap-3 transition-all duration-200 hover:scale-105 shadow-lg">
-            <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-              <div className="w-4 h-4 bg-gradient-to-br from-red-500 via-yellow-500 to-green-500 rounded-full flex items-center justify-center">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              </div>
-            </div>
-            <span>Download App</span>
-          </button>
-        </motion.div>
-
-        
-
-        {/* Fun fact text that appears when background turns cream */}
-        {textStage >= 0.2 && textStage < 7 && (
-          <motion.div
-            className="absolute top-20 left-1/2 transform -translate-x-1/2 text-center w-full px-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: textStage >= 0.2 && textStage < 7 ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
+          <h1
+            className="font-santoshi font-black text-[94px] leading-[0.9] text-[#fefaf3]"
+            style={{ fontFamily: "sans-serif" }}
           >
-            <h2 className="text-xl md:text-2xl font-bold mb-2 -mt-8">{"Here's a fun fact:"}</h2>
-            <p className="text-lg md:text-xl mb-3 -mt-2" >Today, you are the product</p>
+            Your data runs
+            <br /> the world
+          </h1>
+          <p className="text-white mt-6 mb-8 text-base">Start earning from it today.</p>
+          <button
+            className="inline-flex items-center bg-[#C1FF72] px-6 py-3 rounded-full font-bold text-black mb-16 shadow transition-colors hover:bg-[#eaffb5]"
+            onClick={startAnimation}
+          >
+            <img src="/src/Home/HomeImg/appstore2.png" alt="Icon" className="w-6 h-6 mr-2" />
+            Download App
+          </button>
+
+          {/* Original Icon block row - keeping exact same sizes and positions */}
+          <div className="flex justify-center gap-4 -mt-8">
+            {iconPositions.map((originalIndex, currentIndex) => {
+              const icon = icons[originalIndex]
+              const isCurrentlyAnimating = animatingIcons.has(currentIndex)
+
+              return (
+                <div
+                  key={originalIndex}
+                  className={`${icon.bg} w-55 h-55 ${icon.shape} flex items-center justify-center transition-all ease-in-out ${
+                    isCurrentlyAnimating ? "opacity-0 scale-75 duration-700" : "opacity-100 scale-100 duration-500"
+                  }`}
+                  style={{
+                    clipPath: icon.clipPath || "none",
+                    borderRadius: icon.shape === "rounded-3xl" ? "2rem" : "50%",
+                  }}
+                >
+                  <img
+                    src={icon.src || "/placeholder.svg"}
+                    alt={icon.alt}
+                    className={`w-50 h-50 transition-all ${isCurrentlyAnimating ? "duration-700" : "duration-500"}`}
+                  />
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Icons Moving to Center Phase */}
+        {textStage >= 0.1 && textStage < 1 && (
+          <motion.div
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: textStage >= 0.1 && textStage < 1 ? 1 : 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex justify-center gap-4">
+              {icons.map((icon, index) => (
+                <div
+                  key={index}
+                  className={`${icon.bg} w-55 h-55 ${icon.shape} flex items-center justify-center`}
+                  style={{
+                    clipPath: icon.clipPath || "none",
+                    borderRadius: icon.shape === "rounded-3xl" ? "2rem" : "50%",
+                  }}
+                >
+                  <img src={icon.src || "/placeholder.svg"} alt={icon.alt} className="w-50 h-50" />
+                </div>
+              ))}
+            </div>
           </motion.div>
         )}
 
+        {/* Fun fact text that appears when background turns cream */}
+       
+
         {/* Progressive text with positioned icons */}
-        {textStage >= 1 && 
- (
+        {textStage >= 1 && textStage < 7 && (
           <motion.div
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full px-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: textStage >= 1 && textStage < 7 ? 1 : 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="text-4xl md:text-5xl font-black leading-tight max-w-6xl mx-auto">
+            <div className="text-4xl md:text-6xl font-black leading-tight max-w-6xl mx-auto">
               <div className="relative w-full min-h-96">
                 {/* Stage 1: Your favorite songs */}
                 {textStage >= 1 && (
@@ -294,9 +332,9 @@ export default function BestHome() {
                     animate={{ opacity: textStage >= 1 ? 1 : 0, y: textStage >= 1 ? 0 : 20 }}
                     transition={{ duration: 0.5 }}
                   >
-                    <span>Creative Talent.</span>
-                    {renderInlineIcon(originalList[0], 80)}
-                    <span> Right Budget.</span>
+                    <span>Your favorite</span>
+                    {renderInlineIcon(icons[4], 80)}
+                    <span>songs.</span>
                   </motion.div>
                 )}
 
@@ -308,16 +346,15 @@ export default function BestHome() {
                     animate={{ opacity: textStage >= 2 ? 1 : 0, y: textStage >= 2 ? 0 : 20 }}
                     transition={{ duration: 0.5 }}
                   >
-                    <span>Clutter-free Scripting</span>
-                    {renderInlineIcon(originalList[1], 80)}
+                    <span>That</span>
+                    {renderInlineIcon(icons[0], 80)}
                     {textStage >= 3 && (
                       <motion.span
                         initial={{ opacity: 0 }}
                         animate={{ opacity: textStage >= 3 ? 1 : 0 }}
                         transition={{ duration: 0.3 }}
                       >
-                        and Scheduling.
-
+                        must-see movie.
                       </motion.span>
                     )}
                   </motion.div>
@@ -331,17 +368,15 @@ export default function BestHome() {
                     animate={{ opacity: textStage >= 4 ? 1 : 0, y: textStage >= 4 ? 0 : 20 }}
                     transition={{ duration: 0.5 }}
                   >
-                    <span>And a film ready </span>
-                    {renderInlineIcon(originalList[2], 80)}
+                    <span>Your top</span>
+                    {renderInlineIcon(icons[3], 80)}
                     {textStage >= 5 && (
                       <motion.span
                         initial={{ opacity: 0 }}
                         animate={{ opacity: textStage >= 5 ? 1 : 0 }}
                         transition={{ duration: 0.3 }}
                       >
-                       
-                       to meet its audience.
-
+                        interests and
                       </motion.span>
                     )}
                   </motion.div>
@@ -355,11 +390,10 @@ export default function BestHome() {
                     animate={{ opacity: textStage >= 6 ? 1 : 0, y: textStage >= 6 ? 0 : 20 }}
                     transition={{ duration: 0.5 }}
                   >
-                    <span></span>
-                    {renderInlineIcon(originalList[3], 80)}
-                    {renderInlineIcon(originalList[4], 80)}
-                    <span>Now at your Fingertips. 
-</span>
+                    <span>all your shopping</span>
+                    {renderInlineIcon(icons[1], 80)}
+                    {renderInlineIcon(icons[2], 80)}
+                    <span>habits.</span>
                   </motion.div>
                 )}
               </div>
@@ -367,36 +401,19 @@ export default function BestHome() {
           </motion.div>
         )}
 
-      
-
-        {/* Original shuffling icons - visible during initial state and shrinking */}
-        {textStage < 1 && (
-          <motion.div
-            className="flex justify-center gap-2 flex-wrap max-w-5xl mx-auto relative"
-            animate={{ opacity: textStage < 1 ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {icons.map((item, index) => (
-              <motion.div
-                key={item.id}
-                className={`w-36 h-36 md:w-44 md:h-44 flex items-center justify-center ${item.bg} ${item.shape} relative p-4`}
-                animate={getIconStyle(index)}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-              >
-                <img
-                  src={item.image || "/placeholder.svg"}
-                  alt={item.text}
-                  style={{
-                    width: 120,
-                    height: 120,
-                    objectFit: "contain",
-                  }}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
+       
       </div>
+
+      <style jsx>{`
+        .w-62 { width: 15.5rem; }
+        .h-62 { height: 15.5rem; }
+        .w-55 { width: 13.75rem; }
+        .h-55 { height: 13.75rem; }
+        .w-50 { width: 12.5rem; }
+        .h-50 { height: 12.5rem; }
+      `}</style>
     </section>
   )
 }
+
+export default Besthome

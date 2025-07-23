@@ -1,175 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { Menu } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import logo from "../assets/logoo.jpg";
-import { FiPhone, FiMail, FiMapPin } from "react-icons/fi";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-  FaInstagram,
-} from "react-icons/fa";
+import React from "react";
 
-const Header = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
-  const isHomePage = location.pathname === "/";
-
-  useEffect(() => {
-    if (!isHomePage) return; // skip scroll logic for other pages
-
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomePage]);
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "auto";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [menuOpen]);
-
-  if (!isHomePage) return null; // Hide header completely on non-home pages
-
+export default function Header() {
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-transform duration-300 ${
-        scrolled ? "-translate-y-full" : "translate-y-0"
-      } bg-white pl-1 pr-4 py-1`}
-    >
-      <div className="flex items-center justify-between">
-        {/* LEFT: Logo + Contact */}
-        <div className="flex items-center gap-4">
-          <Link to="/">
-            <img
-              src={logo}
-              alt="Company Logo"
-              className={`transition-all duration-300 object-contain cursor-pointer ${
-                scrolled ? "h-22" : "h-27"
-              } -ml-7 ${!scrolled ? "animate-float" : ""}`}
-            />
-          </Link>
+    <nav className="flex items-center bg-[#191919] rounded-tl-xl rounded-bl-xl p-2 px-4 w-fit shadow-md -mt-6 ml-4">
+      <div className="flex items-center">
+       <button className="bg-[#FF732D] w-12 h-12 rounded flex items-center justify-center mr-3">
+  <img
+    src="/src/Home/HomeImg/cinlogo.jpg"
+    alt="Logo"
+    className="w-30 h-30 object-contain"
+  />
+</button>
 
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 text-sm text-gray-700">
-            <div className="text-left">
-              <p className="text-xs text-gray-500 font-semibold uppercase">
-                For Inquiries:
-              </p>
-              <p className={`font-bold ${scrolled ? "text-sm" : "text-lg"}`}>
-                info@example.com
-              </p>
-            </div>
-            <div className="text-left">
-              <p className="text-xs text-gray-500 font-semibold uppercase">
-                Call Us:
-              </p>
-              <p className={`font-bold ${scrolled ? "text-sm" : "text-lg"}`}>
-                (888) 123 4560
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Menu Icon */}
-        <div className="flex items-center gap-10 mr-4 cursor-pointer">
-          <button onClick={() => setMenuOpen(true)}>
-            <Menu size={scrolled ? 24 : 30} />
+        <button className="bg-[#454545] text-white font-semibold px-3 py-1 rounded-md mr-2 text-sm">Home</button>
+        <span className="text-gray-200 font-semibold mx-2 text-sm">About</span>
+        <span className="text-gray-200 font-semibold mx-2 text-sm">Services</span>
+        <span className="text-gray-200 font-semibold mx-2 text-sm">Work</span>
+        <div className="h-6 border-l border-[#454545] mx-3"/>
+        <div className="relative">
+          <button className="text-white font-semibold flex items-center text-sm">
+                Contact
+            
           </button>
+          {/* Optionally, include dropdown items here */}
         </div>
+        <button className="ml-6 bg-[#1C1C1C] hover:bg-[#333] border border-[#444] rounded-full px-4 py-1 text-[#C1FF72] font-semibold text-sm transition-colors duration-150 shadow-lg">
+          Login
+        </button>
       </div>
-
-      {/* MENU PANEL */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-[999] flex text-black h-screen">
-          <div className="w-1/2 bg-white flex flex-col justify-start px-10 pt-10 space-y-6 animate-slide-down">
-            <img
-              src={logo}
-              alt="CREARIST Logo"
-              className="h-12 w-auto object-contain -ml-50"
-            />
-            {[
-              { label: "HOME", path: "/" },
-              { label: "ABOUT US", path: "/about" },
-              { label: "PRODUCTION", path: "/production" },
-              { label: "SERVICES", path: "/services" },
-              { label: "CONTACT", path: "/contact" },
-              { label: "FAQ", path: "#" },
-            ].map(({ label, path }) => (
-              <Link
-                key={label}
-                to={path}
-                onClick={() => setMenuOpen(false)}
-                className="text-6xl text-black font-heading font-bold tracking-wide transform transition-all duration-300 hover:translate-x-6 cursor-pointer"
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Contact + Social */}
-          <div className="w-1/2 bg-gray-100 flex flex-col justify-between px-10 pt-10 pb-16 space-y-8 overflow-y-auto h-screen">
-            <div>
-              <h2 className="text-2xl font-bold mb-6">GET IN TOUCH</h2>
-              {[
-                { Icon: FiPhone, label: "Phone", value: "(888) 456 7890" },
-                { Icon: FiMail, label: "Email now", value: "info@example.com" },
-                {
-                  Icon: FiMapPin,
-                  label: "Office address",
-                  value: "410 Sandtown, California\n94001, USA",
-                },
-              ].map(({ Icon, label, value }, idx) => (
-                <div key={idx} className="flex items-center gap-4 mb-4">
-                  <div className="bg-black rounded-full p-3">
-                    <Icon className="text-white text-lg" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">{label}</p>
-                    <p className="text-md font-medium whitespace-pre-line">
-                      {value}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Social */}
-            <div>
-              <h2 className="text-xl font-bold mb-4">SOCIAL LINK</h2>
-              <div className="flex flex-wrap gap-6 text-md text-gray-700">
-                {[
-                  { Icon: FaFacebookF, label: "Facebook" },
-                  { Icon: FaTwitter, label: "Twitter" },
-                  { Icon: FaLinkedinIn, label: "LinkedIn" },
-                  { Icon: FaInstagram, label: "Instagram" },
-                ].map(({ Icon, label }, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-2 cursor-pointer hover:-translate-x-2 transition-all duration-300"
-                  >
-                    <Icon /> <span>{label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Close Button */}
-          <button
-            onClick={() => setMenuOpen(false)}
-            className="absolute top-6 right-6 text-5xl font-bold text-gray-700 hover:text-black transition-all z-[1000] cursor-pointer"
-          >
-            &times;
-          </button>
-        </div>
-      )}
-    </header>
+    </nav>
   );
-};
-
-export default Header;
+}

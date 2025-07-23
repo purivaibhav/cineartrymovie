@@ -20,22 +20,20 @@ const Home2 = () => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=300",
+          end: "+=400", // extend scroll distance
           scrub: true,
+          pin: true,
         },
       });
 
-      // Animate image positions outward
-      tl.to("#img3", { x: -250, duration: 1 }, 0)
-        .to("#img2", { x: -150, y: -150, duration: 1 }, 0)
-        .to("#img1", { x: -120, y: 100, duration: 1 }, 0)
-        .to("#img4", { x: 120, y: -120, duration: 1 }, 0)
-        .to("#img5", { x: 200, y: 150, duration: 1 }, 0)
-
-        // Animate text to grow and fade in
+      tl.to("#img3", { scale: 2.5, x: -250, duration: 1 }, 0)
+        .to("#img2", { x: -200, y: -150, duration: 1 }, 0)
+        .to("#img1", { x: -160, y: 120, duration: 1 }, 0)
+        .to("#img4", { x: 150, y: -150, duration: 1 }, 0)
+        .to("#img5", { x: 220, y: 160, duration: 1 }, 0)
         .fromTo(
           textRef.current,
-          { scale: 0.75, opacity: 0, y: 20 },
+          { scale: 0.75, opacity: 0, y: 40 },
           {
             scale: 1,
             opacity: 1,
@@ -56,8 +54,7 @@ const Home2 = () => {
       className="relative w-full h-screen bg-white overflow-hidden"
     >
       <div className="relative w-full h-full max-w-screen-xl mx-auto">
-
-        {/* Center Text (Styled Bold & Larger) */}
+        {/* Center Text */}
         <div className="absolute inset-0 z-50 flex items-center justify-center pointer-events-none px-4 text-center">
           <div
             id="centerText"
@@ -65,10 +62,10 @@ const Home2 = () => {
             className="transition-all duration-500"
           >
             <p className="text-xs md:text-sm uppercase tracking-wide text-gray-500 mb-2">
-              {/* 15+ Years of Work Experience */}
+              15+ Years of Work Experience
             </p>
             <h1 className="text-[28px] md:text-[60px] font-extrabold text-[#111111] leading-tight max-w-4xl mx-auto">
-              {/* Your Trusted Partner in Design Excellence */}
+              Your Trusted Partner in Design Excellence
             </h1>
           </div>
         </div>
@@ -78,7 +75,7 @@ const Home2 = () => {
           id="img3"
           src={img3}
           alt="img3"
-          className="absolute w-[270px] left-[18%] top-[22%] z-30"
+          className="absolute w-[270px] left-[18%] top-[22%] z-30 origin-center"
         />
         <img
           id="img2"
