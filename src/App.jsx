@@ -93,7 +93,7 @@ function App() {
   if (isLoading) {
     return (
       <AnimatePresence>
-        {/* <Preloader key="preloader" /> */}
+        <Preloader key="preloader" />
       </AnimatePresence>
     );
   }
