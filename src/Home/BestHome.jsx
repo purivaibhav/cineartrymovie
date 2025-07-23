@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
-import Header from "../components/header"
+import Header from "../components/Header"
 import clapboard from "./HomeImg/clapboard.png";
 import ticket from "./HomeImg/ticket.png";
 import calendar from "./HomeImg/calender.png";
