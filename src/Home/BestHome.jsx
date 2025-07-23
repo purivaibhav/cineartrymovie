@@ -311,8 +311,6 @@ function Besthome() {
           </motion.div>
         )}
 
-        {/* Fun fact text that appears when background turns cream */}
-       
 
         {/* Progressive text with positioned icons */}
         {textStage >= 1 && textStage < 7 && (
