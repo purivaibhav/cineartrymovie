@@ -1,5 +1,6 @@
 import React from "react";
-import LogoImg from "./HomeImg/cinlogo.jpg";
+import cinlogo from "../Home/HomeImg/cinlogo.jpg"
+
 
 export default function Header() {
   return (
@@ -7,7 +8,7 @@ export default function Header() {
       <div className="flex items-center">
        <button className="bg-[#FF732D] w-12 h-12 rounded flex items-center justify-center mr-3">
   <img
-    src={LogoImg}
+    src={cinlogo}
     alt="Logo"
     className="w-30 h-30 object-contain"
   />
