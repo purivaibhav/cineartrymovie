@@ -6,7 +6,7 @@ export default function Header() {
       <div className="flex items-center">
        <button className="bg-[#FF732D] w-12 h-12 rounded flex items-center justify-center mr-3">
   <img
-    src="/src/Home/HomeImg/cinlogo.jpg"
+    src="/assets/HomeImg/cinlogo.jpg"
     alt="Logo"
     className="w-30 h-30 object-contain"
   />

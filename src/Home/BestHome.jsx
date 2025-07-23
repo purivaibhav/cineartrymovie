@@ -23,43 +23,44 @@ function Besthome() {
   const [isAnimationRunning, setIsAnimationRunning] = useState(false)
 
   const icons = [
-    {
-      bg: "bg-[#26B663]",
-      src: "/src/Home/HomeImg/clapboard.png",
-      alt: "Clapboard",
-      shape: "rounded-3xl",
-      text: "movie",
-    },
-    {
-      bg: "bg-[#FFD950]",
-      src: "/src/Home/HomeImg/ticket.png",
-      alt: "Ticket",
-      shape: "rounded-3xl",
-      text: "shopping",
-    },
-    {
-      bg: "bg-[#6FA3FF]",
-      src: "/src/Home/HomeImg/calender.png",
-      alt: "Calendar",
-      shape: "rounded-3xl",
-      clipPath: "polygon(5% 5%, 85% 5%, 100% 50%, 85% 95%, 5% 95%)",
-      text: "habits",
-    },
-    {
-      bg: "bg-[#FFA267]",
-      src: "/src/Home/HomeImg/note.png",
-      alt: "Note",
-      shape: "rounded-full",
-      text: "interests",
-    },
-    {
-      bg: "bg-[#7C73FF]",
-      src: "/src/Home/HomeImg/music.png",
-      alt: "Music",
-      shape: "rounded-full",
-      text: "songs",
-    },
-  ]
+  {
+    bg: "bg-[#26B663]",
+    src: "/assets/HomeImg/clapboard.png",
+    alt: "Clapboard",
+    shape: "rounded-3xl",
+    text: "movie",
+  },
+  {
+    bg: "bg-[#FFD950]",
+    src: "/assets/HomeImg/ticket.png",
+    alt: "Ticket",
+    shape: "rounded-3xl",
+    text: "shopping",
+  },
+  {
+    bg: "bg-[#6FA3FF]",
+    src: "/assets/HomeImg/calender.png",
+    alt: "Calendar",
+    shape: "rounded-3xl",
+    clipPath: "polygon(5% 5%, 85% 5%, 100% 50%, 85% 95%, 5% 95%)",
+    text: "habits",
+  },
+  {
+    bg: "bg-[#FFA267]",
+    src: "/assets/HomeImg/note.png",
+    alt: "Note",
+    shape: "rounded-full",
+    text: "interests",
+  },
+  {
+    bg: "bg-[#7C73FF]",
+    src: "/assets/HomeImg/music.png",
+    alt: "Music",
+    shape: "rounded-full",
+    text: "songs",
+  },
+];
+
 
   const shuffleArray = (array) => {
     const newArray = [...array]
@@ -254,7 +255,7 @@ function Besthome() {
             className="inline-flex items-center bg-[#C1FF72] px-6 py-3 rounded-full font-bold text-black mb-16 shadow transition-colors hover:bg-[#eaffb5]"
             onClick={startAnimation}
           >
-            <img src="/src/Home/HomeImg/appstore2.png" alt="Icon" className="w-6 h-6 mr-2" />
+            <img src="/assets/HomeImg/appstore2.png" alt="Icon" className="w-6 h-6 mr-2" />
             Download App
           </button>
 
