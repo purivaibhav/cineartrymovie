@@ -3,6 +3,13 @@
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import Header from "../components/header"
+import clapboard from "./HomeImg/clapboard.png";
+import ticket from "./HomeImg/ticket.png";
+import calendar from "./HomeImg/calender.png";
+import note from "./HomeImg/note.png";
+import music from "./HomeImg/music.png";
+import AppstoreImg from "./HomeImg/appstore2.png";
+
 
 // Background pill elements for the data section
 const backgroundPills = Array.from({ length: 50 }, (_, i) => ({
@@ -23,42 +30,11 @@ function Besthome() {
   const [isAnimationRunning, setIsAnimationRunning] = useState(false)
 
   const icons = [
-  {
-    bg: "bg-[#26B663]",
-    src: "/assets/HomeImg/clapboard.png",
-    alt: "Clapboard",
-    shape: "rounded-3xl",
-    text: "movie",
-  },
-  {
-    bg: "bg-[#FFD950]",
-    src: "/assets/HomeImg/ticket.png",
-    alt: "Ticket",
-    shape: "rounded-3xl",
-    text: "shopping",
-  },
-  {
-    bg: "bg-[#6FA3FF]",
-    src: "/assets/HomeImg/calender.png",
-    alt: "Calendar",
-    shape: "rounded-3xl",
-    clipPath: "polygon(5% 5%, 85% 5%, 100% 50%, 85% 95%, 5% 95%)",
-    text: "habits",
-  },
-  {
-    bg: "bg-[#FFA267]",
-    src: "/assets/HomeImg/note.png",
-    alt: "Note",
-    shape: "rounded-full",
-    text: "interests",
-  },
-  {
-    bg: "bg-[#7C73FF]",
-    src: "/assets/HomeImg/music.png",
-    alt: "Music",
-    shape: "rounded-full",
-    text: "songs",
-  },
+  { bg: "bg-[#26B663]", src: clapboard, alt: "Clapboard", shape: "rounded-3xl", text: "movie" },
+  { bg: "bg-[#FFD950]", src: ticket, alt: "Ticket", shape: "rounded-3xl", text: "shopping" },
+  { bg: "bg-[#6FA3FF]", src: calendar, alt: "Calendar", shape: "rounded-3xl", text: "habits" },
+  { bg: "bg-[#FFA267]", src: note, alt: "Note", shape: "rounded-full", text: "interests" },
+  { bg: "bg-[#7C73FF]", src: music, alt: "Music", shape: "rounded-full", text: "songs" },
 ];
 
 
@@ -255,7 +231,7 @@ function Besthome() {
             className="inline-flex items-center bg-[#C1FF72] px-6 py-3 rounded-full font-bold text-black mb-16 shadow transition-colors hover:bg-[#eaffb5]"
             onClick={startAnimation}
           >
-            <img src="/assets/HomeImg/appstore2.png" alt="Icon" className="w-6 h-6 mr-2" />
+            <img src={AppstoreImg} alt="Icon" className="w-6 h-6 mr-2" />
             Download App
           </button>
 
